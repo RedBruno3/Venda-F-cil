@@ -3,29 +3,33 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'screens/auth_screen.dart';
 import 'screens/home_screen.dart';
 
-const String supabaseUrl = String.fromEnvironment('SUPABASE_URL');
-const String supabaseKey = String.fromEnvironment('SUPABASE_KEY');
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  if (supabaseUrl.isNotEmpty && supabaseKey.isNotEmpty) {
+  const supabaseUrl = 'https://uhoukwltqmsiichiooxo.supabase.co';
+  const supabaseKey = 'sb_publishable_QdW9hoUilS5Mr75MUwvg_9xV26tMj';
+
+  String? initError;
+  try {
     await Supabase.initialize(
       url: supabaseUrl,
       anonKey: supabaseKey,
     );
+  } catch (e) {
+    initError = e.toString();
   }
 
-  runApp(const VendaFacilApp());
+  runApp(VendaFacilApp(initError: initError));
 }
 
 class VendaFacilApp extends StatelessWidget {
-  const VendaFacilApp({super.key});
+  final String? initError;
+  const VendaFacilApp({super.key, this.initError});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'VendaFácil',
+      title: 'VendaFácil ERP',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -33,13 +37,27 @@ class VendaFacilApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         useMaterial3: true,
-        inputDecorationTheme: const InputDecorationTheme(
-          border: OutlineInputBorder(),
-          isDense: true,
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          filled: true,
+          fillColor: Colors.grey.shade50,
         ),
       ),
-      home: supabaseUrl.isEmpty || supabaseKey.isEmpty
-          ? const MissingConfigScreen()
+      home: initError != null
+          ? Scaffold(
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Text(
+                    'Erro ao conectar no Supabase:\n$initError',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ),
+              ),
+            )
           : const AuthGate(),
     );
   }
@@ -59,25 +77,6 @@ class AuthGate extends StatelessWidget {
         }
         return const AuthScreen();
       },
-    );
-  }
-}
-
-class MissingConfigScreen extends StatelessWidget {
-  const MissingConfigScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Padding(
-          padding: EdgeInsets.all(24),
-          child: Text(
-            'Configuração ausente: defina SUPABASE_URL e SUPABASE_KEY via --dart-define.',
-            textAlign: TextAlign.center,
-          ),
-        ),
-      ),
     );
   }
 }
