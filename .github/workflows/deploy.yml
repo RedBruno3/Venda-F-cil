@@ -47,21 +47,6 @@ jobs:
             --dart-define=SUPABASE_URL="$SUPABASE_URL" \
             --dart-define=SUPABASE_KEY="$SUPABASE_KEY"
 
-      - name: Setup Supabase CLI
-        uses: supabase/setup-cli@v1
-        with:
-          version: latest
-
-      - name: Push database migrations
-        env:
-          SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
-        run: |
-          if [ -n "$SUPABASE_DB_URL" ]; then
-            supabase db push --db-url "$SUPABASE_DB_URL" --yes
-          else
-            echo "SUPABASE_DB_URL não definido, pulando migração."
-          fi
-
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
