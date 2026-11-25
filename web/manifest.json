@@ -1,0 +1,11 @@
+{
+  "name": "VendaFácil ERP",
+  "short_name": "VendaFácil",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#F5F7FA",
+  "theme_color": "#1565C0",
+  "description": "Protótipo acadêmico de um ERP para pequenos comércios.",
+  "orientation": "any",
+  "prefer_related_applications": false
+}
