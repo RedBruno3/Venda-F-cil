@@ -7,7 +7,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   const supabaseUrl = 'https://uhoukwltqmsiichiooxo.supabase.co';
-  const supabaseKey = 'sb_publishable_QdW9hoUilS5Mr75MUwvg_9xV26tMj';
+  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVob3Vrd2x0cW1zaWljaGlvb3hvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTU2Mzg3MDAsImV4cCI6MjExMTIxNDcwMH0.w5OpkmtePsKLkX36BBMvaRcuWP4zo_mNgFcsjFGd8nU';
 
   String? initError;
   try {
